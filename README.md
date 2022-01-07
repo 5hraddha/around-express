@@ -44,7 +44,7 @@ The project has the following directory structure:
 | Request 	| Response 	| Error 	|
 |---	|---	|---	|
 | GET `http://localhost:3000/users` 	| JSON list of all users 	| `500` — Internal server error response. Accompanied by the message: *"An error has occurred on the server"*. 	|
-| GET `http://localhost:3000/users/8340d0ec33270a25f2413b69` 	| JSON of a user with an ID passed after `/users`. 	| `404` - The server can not find the requested resource. Accompanied by the message: *"User ID not found".*<br>`500` - Internal server error response. Accompanied by the message: *"An error has occurred on the server".* 	|
+| GET `http://localhost:3000/users/ 8340d0ec33270a25f2413b69` 	| JSON of a user with an ID passed after `/users`. 	| `404` - The server can not find the requested resource. Accompanied by the message: *"User ID not found".*<br>`500` - Internal server error response. Accompanied by the message: *"An error has occurred on the server".* 	|
 | GET `http://localhost:3000/cards` 	| JSON list of all cards 	| `500` - Internal server error response. Accompanied by the message: *"An error has occurred on the server"*. 	|
 | Non-existent address or localhost:3000 	| N/A 	| `404` - The server can not find the requested resource. Accompanied by the message: *"Requested resource not found"*. 	|
 
