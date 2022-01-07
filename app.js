@@ -8,6 +8,10 @@ const app = express();
 
 app.use('/users', userRouter);
 app.use('/cards', cardRouter);
+app.use((req, res) => res
+  .status(404)
+  .send({ 'message': 'Requested resource not found' })
+  );
 
 app.listen(PORT, () => {
   console.log(`App listening at port ${PORT}`);
