@@ -39,7 +39,7 @@ const getUserProfile = (req, res) => {
     .orFail()
     .then((user) => res
       .status(200)
-      .send({data: user}))
+      .send({ data: user }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res
@@ -57,7 +57,35 @@ const getUserProfile = (req, res) => {
     });
 }
 
+/**
+ * Router handler for POST request on `/users` API endpoint to create a specific user profile.
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid User data passed for creating a user.
+ * @return {object} `500` - Internal server error response.
+ */
+const createUser = (req, res) => {
+  const { name, about, avatar } = req.body;
+  User.create({ name, about, avatar })
+    .then((user) => res
+      .status(200)
+      .send({ data: user }))
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        res
+          .status(400)
+          .send({ message: getErrorMsg(err) });
+      } else {
+        res
+          .status(500)
+          .send({ message: `${err.name} - An error has occurred on the server` });
+      }
+    });
+}
+
 module.exports = {
   getUsers,
-  getUserProfile
+  getUserProfile,
+  createUser,
 };
