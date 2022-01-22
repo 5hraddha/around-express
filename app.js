@@ -1,6 +1,7 @@
 // All the imports
 const express = require('express');
 const helmet = require('helmet');
+const mongoose = require('mongoose');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 
@@ -8,8 +9,11 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-// Securing the HTTP header
+// Secure the HTTP header
 app.use(helmet());
+
+// Connect to the MongoDB server
+mongoose.connect('mongodb://127.0.0.1:27017/aroundb');
 
 // All the routes
 app.use('/users', userRouter);
