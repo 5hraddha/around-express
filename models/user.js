@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema({
   },
   about: {
     type: String,
-    required: [true, 'User information is required.'],
+    required: [true, 'User information is required'],
     trim: true,
     minlength: 2,
     maxlength: 30,
