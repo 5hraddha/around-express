@@ -3,7 +3,10 @@
  * @module routes/cards
  */
 const router = require('express').Router();
-const { getCards } = require('../controllers/cards');
+const {
+  getCards,
+  createCard,
+} = require('../controllers/cards');
 
 /**
  * GET /cards
@@ -14,5 +17,16 @@ const { getCards } = require('../controllers/cards');
  * @return {object} `500` - Internal server error response.
  */
 router.get('/', getCards);
+
+/**
+ * POST /cards
+ * @summary - Create a new card.
+ * @param {string} route - Route to serve.
+ * @param {Function} routeHandler - A callback to handle the route.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid Card data passed for creating a card.
+ * @return {object} `500` - Internal server error response.
+ */
+router.post('/', createCard);
 
 module.exports = router;
