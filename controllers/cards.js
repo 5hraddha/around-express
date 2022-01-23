@@ -94,8 +94,48 @@ const deleteCard = (req, res) => {
     });
 };
 
+/**
+ * Router handler for PUT request on `/cards/:cardId/likes` API endpoint to like a card.
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid Card ID passed for liking a card.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+const likeCard = (req, res) => {
+  const currentUser = req.user._id;
+  const { cardId } = req.params;
+
+  Card.findByIdAndUpdate(
+    cardId,
+    { $addToSet: { likes: currentUser } },
+    { new: true },
+  )
+    .orFail()
+    .then((card) => res
+      .status(200)
+      .send({ data: card }))
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res
+          .status(404)
+          .send({ message: `${err.name} - Card not found` });
+      } else if (err.name === 'CastError') {
+        res
+          .status(400)
+          .send({ message: `${err.name} - Invalid Card ID passed for deleting a card` });
+      } else {
+        res
+          .status(500)
+          .send({ message: `${err.name} - An error has occurred on the server` });
+      }
+    });
+};
+
 module.exports = {
   getCards,
   createCard,
   deleteCard,
+  likeCard,
 };
