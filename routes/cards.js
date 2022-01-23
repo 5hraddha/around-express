@@ -8,6 +8,7 @@ const {
   createCard,
   deleteCard,
   likeCard,
+  dislikeCard,
 } = require('../controllers/cards');
 
 /**
@@ -54,5 +55,17 @@ router.delete('/:cardId', deleteCard);
  * @return {object} `500` - Internal server error response.
  */
 router.put('/:cardId/likes', likeCard);
+
+/**
+ * DELETE /cards/:cardId/likes
+ * @summary - Delete a like on the card.
+ * @param {string} route - Route to serve.
+ * @param {Function} routeHandler - A callback to handle the route.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid Card ID passed for disliking a card.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+router.delete('/:cardId/likes', dislikeCard);
 
 module.exports = router;
