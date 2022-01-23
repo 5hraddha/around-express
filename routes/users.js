@@ -7,6 +7,7 @@ const {
   getUsers,
   getUserProfile,
   createUser,
+  updateUserProfile,
 } = require('../controllers/users');
 
 /**
@@ -41,5 +42,17 @@ router.get('/:userId', getUserProfile);
  * @return {object} `500` - Internal server error response.
  */
 router.post('/', createUser);
+
+/**
+ * PATCH /users/me
+ * @summary - Update the current user profile.
+ * @param {string} route - Route to serve.
+ * @param {Function} routeHandler - A callback to handle the route.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid User data passed for updating the user profile.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+router.patch('/me', updateUserProfile);
 
 module.exports = router;
