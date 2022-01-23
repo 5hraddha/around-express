@@ -3,7 +3,10 @@
  * @module routes/users
  */
 const router = require('express').Router();
-const { getUsers, getUserProfile } = require('../controllers/users');
+const {
+  getUsers,
+  getUserProfile,
+  createUser } = require('../controllers/users');
 
 /**
  * GET /users
@@ -16,14 +19,15 @@ const { getUsers, getUserProfile } = require('../controllers/users');
 router.get('/', getUsers);
 
 /**
- * GET /users/:id
+ * GET /users/:userId
  * @summary - Get a specific user profile with an ID.
  * @param {string} route - Route to serve.
  * @param {Function} routeHandler - A callback to handle the route.
  * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid User ID passed for searching a user.
  * @return {object} `404` - The server can not find the requested resource.
  * @return {object} `500` - Internal server error response.
  */
-router.get('/:id', getUserProfile);
+router.get('/:userId', getUserProfile);
 
 module.exports = router;
