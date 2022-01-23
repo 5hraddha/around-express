@@ -9,9 +9,9 @@ const getErrorMsg = require('../utils/getErrorMsg');
  * Route handler for GET request on `/users` API endpoint to get all the users.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response with data - application/json.
- * @return {object} `404` - The server can not find the requested resource.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response with data - application/json.
+ * @return {Object} `404` - The server can not find the requested resource.
+ * @return {Object} `500` - Internal server error response.
  */
 const getUsers = (req, res) => {
   User.find({})
@@ -36,10 +36,10 @@ const getUsers = (req, res) => {
  * Route handler for GET request on `/users/:userId` API endpoint to get a specific user profile.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response - application/json.
- * @return {object} `400` - Invalid User ID passed for searching a user.
- * @return {object} `404` - The server can not find the requested resource.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response - application/json.
+ * @return {Object} `400` - Invalid User ID passed for searching a user.
+ * @return {Object} `404` - The server can not find the requested resource.
+ * @return {Object} `500` - Internal server error response.
  */
 const getUserProfile = (req, res) => {
   const { userId } = req.params;
@@ -70,9 +70,9 @@ const getUserProfile = (req, res) => {
  * Route handler for POST request on `/users` API endpoint to create a specific user profile.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response - application/json.
- * @return {object} `400` - Invalid User data passed for creating a user.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response - application/json.
+ * @return {Object} `400` - Invalid User data passed for creating a user.
+ * @return {Object} `500` - Internal server error response.
  */
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
@@ -98,10 +98,10 @@ const createUser = (req, res) => {
  * Route handler for PATCH request on `/users/me` API endpoint to update the current user profile.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response - application/json.
- * @return {object} `400` - Invalid User data passed for updating the user profile.
- * @return {object} `404` - The server can not find the requested resource.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response - application/json.
+ * @return {Object} `400` - Invalid User data passed for updating the user profile.
+ * @return {Object} `404` - The server can not find the requested resource.
+ * @return {Object} `500` - Internal server error response.
  */
 const updateUserProfile = (req, res) => {
   const currentUser = req.user._id;
@@ -144,10 +144,10 @@ const updateUserProfile = (req, res) => {
  * Route handler for PATCH request on `/users/me/avatar` API endpoint to update the user avatar.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response - application/json.
- * @return {object} `400` - Invalid link passed for updating the user avatar.
- * @return {object} `404` - The server can not find the requested resource.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response - application/json.
+ * @return {Object} `400` - Invalid link passed for updating the user avatar.
+ * @return {Object} `404` - The server can not find the requested resource.
+ * @return {Object} `500` - Internal server error response.
  */
 const updateUserAvatar = (req, res) => {
   const currentUser = req.user._id;

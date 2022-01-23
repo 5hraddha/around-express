@@ -9,9 +9,9 @@ const getErrorMsg = require('../utils/getErrorMsg');
  * Route handler for GET request on `/cards` API endpoint to get all the cards.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response with data - application/json.
- * @return {object} `404` - The server can not find the requested resource.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response with data - application/json.
+ * @return {Object} `404` - The server can not find the requested resource.
+ * @return {Object} `500` - Internal server error response.
  */
 const getCards = (req, res) => {
   Card.find({})
@@ -36,9 +36,9 @@ const getCards = (req, res) => {
  * Route handler for POST request on `/cards` API endpoint to create a new card.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response - application/json.
- * @return {object} `400` - Invalid Card data passed for creating a card.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response - application/json.
+ * @return {Object} `400` - Invalid Card data passed for creating a card.
+ * @return {Object} `500` - Internal server error response.
  */
 const createCard = (req, res) => {
   const { name, link } = req.body;
@@ -64,10 +64,10 @@ const createCard = (req, res) => {
  * Route handler for DELETE request on `/cards/:cardId` API endpoint to delete a card.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response - application/json.
- * @return {object} `400` - Invalid Card ID passed for deleting a card.
- * @return {object} `404` - The server can not find the requested resource.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response - application/json.
+ * @return {Object} `400` - Invalid Card ID passed for deleting a card.
+ * @return {Object} `404` - The server can not find the requested resource.
+ * @return {Object} `500` - Internal server error response.
  */
 const deleteCard = (req, res) => {
   const { cardId } = req.params;
@@ -98,10 +98,10 @@ const deleteCard = (req, res) => {
  * Route handler for PUT request on `/cards/:cardId/likes` API endpoint to like a card.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response - application/json.
- * @return {object} `400` - Invalid Card ID passed for liking a card.
- * @return {object} `404` - The server can not find the requested resource.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response - application/json.
+ * @return {Object} `400` - Invalid Card ID passed for liking a card.
+ * @return {Object} `404` - The server can not find the requested resource.
+ * @return {Object} `500` - Internal server error response.
  */
 const likeCard = (req, res) => {
   const currentUser = req.user._id;
@@ -137,10 +137,10 @@ const likeCard = (req, res) => {
  * Route handler for DELETE request on `/cards/:cardId/likes` API endpoint to unlike a card.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {object} `200` - success response - application/json.
- * @return {object} `400` - Invalid Card ID passed for disliking a card.
- * @return {object} `404` - The server can not find the requested resource.
- * @return {object} `500` - Internal server error response.
+ * @return {Object} `200` - success response - application/json.
+ * @return {Object} `400` - Invalid Card ID passed for disliking a card.
+ * @return {Object} `404` - The server can not find the requested resource.
+ * @return {Object} `500` - Internal server error response.
  */
 const dislikeCard = (req, res) => {
   const currentUser = req.user._id;

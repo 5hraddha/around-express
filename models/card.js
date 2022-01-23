@@ -1,8 +1,16 @@
+/**
+ * Data layer for a card
+ * @module models/card
+ */
 const mongoose = require('mongoose');
 
 // eslint-disable-next-line
 const validateUrlRegex = /^(https?:\/\/)[w{3}]*\.?[a-z0-9\._\-~:\/\?%#\[\]@!$&'\(\)\*\+\,;=]+#?$/gmi;
 
+/**
+ * Card schema. Contains all the cards related fields: name, link, owner, likes and createdAt
+ * @constructor card
+ */
 const cardSchema = mongoose.Schema({
   name: {
     type: String,

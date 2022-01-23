@@ -1,8 +1,16 @@
+/**
+ * Data layer for a user
+ * @module models/user
+ */
 const mongoose = require('mongoose');
 
 // eslint-disable-next-line
 const validateUrlRegex = /^(https?:\/\/)[w{3}]*\.?[a-z0-9\._\-~:\/\?%#\[\]@!$&'\(\)\*\+\,;=]+#?$/gmi;
 
+/**
+ * User schema. Contains all the users related fields: name, about and avatar
+ * @constructor user
+ */
 const userSchema = mongoose.Schema({
   name: {
     type: String,
