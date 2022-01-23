@@ -33,5 +33,6 @@ app.use((req, res) => res
   .send({ message: 'Requested resource not found' }));
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`App listening at port ${PORT}`);
 });

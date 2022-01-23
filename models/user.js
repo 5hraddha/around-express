@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// eslint-disable-next-line
 const validateUrlRegex = /^(https?:\/\/)[w{3}]*\.?[a-z0-9\._\-~:\/\?%#\[\]@!$&'\(\)\*\+\,;=]+#?$/gmi;
 
 const userSchema = mongoose.Schema({
