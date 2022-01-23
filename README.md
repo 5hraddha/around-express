@@ -9,6 +9,7 @@
 2. Express Framework (for development)
 3. Postman (for testing API endpoints)
 4. EsLint
+5. MongoDB
 
 ### ![node-icon](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 - **Node** (or more formally *Node.js*) is an *open-source*, *cross-platform* runtime environment that allows developers to create all kinds of server-side tools and applications in JavaScript. 
@@ -31,27 +32,40 @@
 - **ESLint** is an open-source Javascript linting utility used to find problematic patterns or code that doesn’t adhere to certain style guidelines. 
 - We are using [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript).
 
+### ![mongodb-icon](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+- **MongoDB** is a document database with the scalability and flexibility that the customer wants with the querying and indexing that the customer needs.
+- MongoDB stores data in flexible, JSON-like documents.
+- The document model maps to the objects in the application code, making data easy to work with.
+- MongoDB is a distributed database at its core, so high availability, horizontal scaling, and geographic distribution are built in and easy to use.
+- MongoDB is free to use.
+
 ## Directory Structures
 The project has the following directory structure:  
 | Directory 	| Purpose 	|
 |---	|---	|
-| `/data` 	| Contains JSON files to temporarily emulate database integration. 	|
+| `/models` 	| Contains all MongoDB schemas and models - all data layers. 	|
 | `/routes` 	| Contains routing files. 	|
 | `/controllers` 	| Contains all the route handler callbacks. 	|
 | `/utils` 	| Contains all the helper methods for general purpose tasks. 	|
 
 ## REST API Endpoints
-| Request 	| Response 	| Error 	|
-|---	|---	|---	|
-| GET `http://localhost:3000/users` 	| JSON list of all users 	| `500` — Internal server error response. Accompanied by the message: *"An error has occurred on the server"*. 	|
-| GET `http://localhost:3000/users/ 8340d0ec33270a25f2413b69` 	| JSON of a user with an ID passed after `/users`. 	| `404` - The server can not find the requested resource. Accompanied by the message: *"User ID not found".*<br>`500` - Internal server error response. Accompanied by the message: *"An error has occurred on the server".* 	|
-| GET `http://localhost:3000/cards` 	| JSON list of all cards 	| `500` - Internal server error response. Accompanied by the message: *"An error has occurred on the server"*. 	|
-| Non-existent address or localhost:3000 	| N/A 	| `404` - The server can not find the requested resource. Accompanied by the message: *"Requested resource not found"*. 	|
+| HTTP Methods | REST API Endpoint      | Purpose                                |
+|--------------|------------------------|----------------------------------------|
+| `GET`        | `/users`               | Get JSON list of all the users         |
+| `GET`        | `/users/:userId`       | Get a specific user profile with an ID |
+| `POST`       | `/users`               | Create a specific user profile         |
+| `PATCH`      | `/users/me`            | Update the current user profile        |
+| `PATCH`      | `/users/me/avatar`     | Update the current user avatar         |
+| `GET`        | `/cards`               | Get JSON list of all the cards         |
+| `POST`       | `/cards`               | Create a new card                      |
+| `DELETE`     | `/cards/:cardId`       | Delete a card by the given ID          |
+| `PUT`        | `/cards/:cardId/likes` | Update a card by liking it             |
+| `DELETE`     | `/cards/:cardId/likes` | Delete a like on the card              |
 
 ## Running the Project  
 | Command 	| Purpose 	|
 |---	|---	|
-| `npm run start` 	| to launch the server 	|
-| `npm run dev` 	| to launch the server with the hot reload feature 	|
+| `npm run start` 	| To launch the server 	|
+| `npm run dev` 	| To launch the server with the hot reload feature 	|
 
 
