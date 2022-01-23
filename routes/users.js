@@ -8,6 +8,7 @@ const {
   getUserProfile,
   createUser,
   updateUserProfile,
+  updateUserAvatar,
 } = require('../controllers/users');
 
 /**
@@ -54,5 +55,17 @@ router.post('/', createUser);
  * @return {object} `500` - Internal server error response.
  */
 router.patch('/me', updateUserProfile);
+
+/**
+ * PATCH /users/me/avatar
+ * @summary - Update the current user avatar.
+ * @param {string} route - Route to serve.
+ * @param {Function} routeHandler - A callback to handle the route.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid link passed for updating the user avatar.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+router.patch('/me/avatar', updateUserAvatar);
 
 module.exports = router;
