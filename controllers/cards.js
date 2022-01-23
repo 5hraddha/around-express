@@ -60,7 +60,42 @@ const createCard = (req, res) => {
     });
 };
 
+/**
+ * Router handler for DELETE request on `/cards/:cardId` API endpoint to delete a card.
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid Card ID passed for deleting a card.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+const deleteCard = (req, res) => {
+  const { cardId } = req.params;
+
+  Card.findByIdAndDelete(cardId)
+    .orFail()
+    .then((card) => res
+      .status(200)
+      .send({ data: card }))
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res
+          .status(404)
+          .send({ message: `${err.name} - Card not found` });
+      } else if (err.name === 'CastError') {
+        res
+          .status(400)
+          .send({ message: `${err.name} - Invalid Card ID passed for deleting a card` });
+      } else {
+        res
+          .status(500)
+          .send({ message: `${err.name} - An error has occurred on the server` });
+      }
+    });
+};
+
 module.exports = {
   getCards,
   createCard,
+  deleteCard,
 };
