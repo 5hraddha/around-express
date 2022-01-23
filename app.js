@@ -17,7 +17,15 @@ mongoose.connect('mongodb://127.0.0.1:27017/aroundb');
 
 app.use(express.json());
 
-// All the routes
+// Implement a Temporary Authorization Solution
+app.use((req, res, next) => {
+  req.user = {
+    _id: '61eb9fb427053e8816df1826'
+  };
+
+  next();
+});
+// Add all routes
 app.use('/users', userRouter);
 app.use('/cards', cardRouter);
 app.use((req, res) => res
