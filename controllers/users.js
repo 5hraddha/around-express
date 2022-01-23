@@ -10,6 +10,7 @@ const getErrorMsg = require('../utils/getErrorMsg');
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
  * @return {object} `200` - success response with data - application/json.
+ * @return {object} `404` - The server can not find the requested resource.
  * @return {object} `500` - Internal server error response.
  */
 const getUsers = (req, res) => {
@@ -18,9 +19,17 @@ const getUsers = (req, res) => {
     .then((users) => res
       .status(200)
       .send(users))
-    .catch((err) => res
-      .status(500)
-      .send({ message: `${err.name} - An error has occurred on the server` }));
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res
+          .status(404)
+          .send({ message: `${err.name} - Users not found` });
+      } else {
+        res
+          .status(500)
+          .send({ message: `${err.name} - An error has occurred on the server` });
+      }
+    });
 };
 
 /**
