@@ -131,9 +131,56 @@ const updateUserProfile = (req, res) => {
     });
 };
 
+/**
+ * Route handler for PATCH request on `/users/me/avatar` API endpoint to update the user avatar.
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid link passed for updating the user avatar.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+const updateUserAvatar = (req, res) => {
+  const currentUser = req.user._id;
+  const { avatar } = req.body;
+
+  User.findOneAndUpdate(
+    currentUser,
+    { avatar },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .orFail()
+    .then((user) => res
+      .status(200)
+      .send({ data: user }))
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res
+          .status(404)
+          .send({ message: `${err.name} - User not found` });
+      } else if (err.name === 'ValidationError') {
+        res
+          .status(400)
+          .send({ message: getErrorMsg(err) });
+      } else if (err.name === 'CastError') {
+        res
+          .status(400)
+          .send({ message: `${err.name} - Invalid avatar link passed for updation` });
+      } else {
+        res
+          .status(500)
+          .send({ message: `${err.name} - An error has occurred on the server` });
+      }
+    });
+};
+
 module.exports = {
   getUsers,
   getUserProfile,
   createUser,
   updateUserProfile,
+  updateUserAvatar,
 };
