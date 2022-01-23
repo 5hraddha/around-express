@@ -20,7 +20,7 @@ app.use(express.json());
 // Implement a Temporary Authorization Solution
 app.use((req, res, next) => {
   req.user = {
-    _id: '61eb9fb427053e8816df1826'
+    _id: '61eb9fb427053e8816df1826',
   };
 
   next();
