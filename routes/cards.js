@@ -6,6 +6,7 @@ const router = require('express').Router();
 const {
   getCards,
   createCard,
+  deleteCard,
 } = require('../controllers/cards');
 
 /**
@@ -28,5 +29,17 @@ router.get('/', getCards);
  * @return {object} `500` - Internal server error response.
  */
 router.post('/', createCard);
+
+/**
+ * DELETE /cards/:cardId
+ * @summary - Delete a card by the given ID.
+ * @param {string} route - Route to serve.
+ * @param {Function} routeHandler - A callback to handle the route.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid Card ID passed for deleting a card.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+router.delete('/:cardId', deleteCard);
 
 module.exports = router;
