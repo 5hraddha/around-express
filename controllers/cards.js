@@ -6,7 +6,7 @@ const Card = require('../models/card');
 const getErrorMsg = require('../utils/getErrorMsg');
 
 /**
- * Router handler for GET request on `/cards` API endpoint to get all the cards.
+ * Route handler for GET request on `/cards` API endpoint to get all the cards.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
  * @return {object} `200` - success response with data - application/json.
@@ -33,7 +33,7 @@ const getCards = (req, res) => {
 };
 
 /**
- * Router handler for POST request on `/cards` API endpoint to create a new card.
+ * Route handler for POST request on `/cards` API endpoint to create a new card.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
  * @return {object} `200` - success response - application/json.
@@ -61,7 +61,7 @@ const createCard = (req, res) => {
 };
 
 /**
- * Router handler for DELETE request on `/cards/:cardId` API endpoint to delete a card.
+ * Route handler for DELETE request on `/cards/:cardId` API endpoint to delete a card.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
  * @return {object} `200` - success response - application/json.
@@ -95,7 +95,7 @@ const deleteCard = (req, res) => {
 };
 
 /**
- * Router handler for PUT request on `/cards/:cardId/likes` API endpoint to like a card.
+ * Route handler for PUT request on `/cards/:cardId/likes` API endpoint to like a card.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
  * @return {object} `200` - success response - application/json.
@@ -124,7 +124,46 @@ const likeCard = (req, res) => {
       } else if (err.name === 'CastError') {
         res
           .status(400)
-          .send({ message: `${err.name} - Invalid Card ID passed for deleting a card` });
+          .send({ message: `${err.name} - Invalid Card ID passed for liking a card` });
+      } else {
+        res
+          .status(500)
+          .send({ message: `${err.name} - An error has occurred on the server` });
+      }
+    });
+};
+
+/**
+ * Route handler for DELETE request on `/cards/:cardId/likes` API endpoint to unlike a card.
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid Card ID passed for disliking a card.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+const dislikeCard = (req, res) => {
+  const currentUser = req.user._id;
+  const { cardId } = req.params;
+
+  Card.findByIdAndUpdate(
+    cardId,
+    { $pull: { likes: currentUser } },
+    { new: true },
+  )
+    .orFail()
+    .then((card) => res
+      .status(200)
+      .send({ data: card }))
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res
+          .status(404)
+          .send({ message: `${err.name} - Card not found` });
+      } else if (err.name === 'CastError') {
+        res
+          .status(400)
+          .send({ message: `${err.name} - Invalid Card ID passed for disliking a card` });
       } else {
         res
           .status(500)
@@ -138,4 +177,5 @@ module.exports = {
   createCard,
   deleteCard,
   likeCard,
+  dislikeCard,
 };
