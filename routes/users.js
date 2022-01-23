@@ -30,4 +30,15 @@ router.get('/', getUsers);
  */
 router.get('/:userId', getUserProfile);
 
+/**
+ * POST /users
+ * @summary - Create a specific user profile.
+ * @param {string} route - Route to serve.
+ * @param {Function} routeHandler - A callback to handle the route.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid User ID passed for creating a user.
+ * @return {object} `500` - Internal server error response.
+ */
+router.post('/', createUser);
+
 module.exports = router;
