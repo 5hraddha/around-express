@@ -2,8 +2,8 @@
  * Define all the route handlers related to users on `/users` API endpoint.
  * @module controllers/users
  */
-const User = require('./../models/user');
-const getErrorMsg = require('./../utils/getErrorMsg');
+const User = require('../models/user');
+const getErrorMsg = require('../utils/getErrorMsg');
 
 /**
  * Router handler for GET request on `/users` API endpoint to get all the users.
@@ -18,7 +18,7 @@ const getUsers = (req, res) => {
     .then((users) => res
       .status(200)
       .send(users))
-    .catch(() => res
+    .catch((err) => res
       .status(500)
       .send({ message: `${err.name} - An error has occurred on the server` }));
 };
@@ -55,7 +55,7 @@ const getUserProfile = (req, res) => {
           .send({ message: `${err.name} - An error has occurred on the server` });
       }
     });
-}
+};
 
 /**
  * Router handler for POST request on `/users` API endpoint to create a specific user profile.
@@ -82,7 +82,7 @@ const createUser = (req, res) => {
           .send({ message: `${err.name} - An error has occurred on the server` });
       }
     });
-}
+};
 
 module.exports = {
   getUsers,

@@ -6,7 +6,8 @@ const router = require('express').Router();
 const {
   getUsers,
   getUserProfile,
-  createUser } = require('../controllers/users');
+  createUser,
+} = require('../controllers/users');
 
 /**
  * GET /users

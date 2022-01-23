@@ -12,9 +12,9 @@ const getErrorMsg = (err) => {
   const errArray = [];
   err.message
     .split(',')
-    .forEach(item => errArray
+    .forEach((item) => errArray
       .push(item.split(':').slice(-1)));
   return `${err.name} - ${errArray.join(' | ')}`;
-}
+};
 
 module.exports = getErrorMsg;
