@@ -6,7 +6,7 @@ const User = require('../models/user');
 const getErrorMsg = require('../utils/getErrorMsg');
 
 /**
- * Router handler for GET request on `/users` API endpoint to get all the users.
+ * Route handler for GET request on `/users` API endpoint to get all the users.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
  * @return {object} `200` - success response with data - application/json.
@@ -24,7 +24,7 @@ const getUsers = (req, res) => {
 };
 
 /**
- * Router handler for GET request on `/users/:userId` API endpoint to get a specific user profile.
+ * Route handler for GET request on `/users/:userId` API endpoint to get a specific user profile.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
  * @return {object} `200` - success response - application/json.
@@ -58,7 +58,7 @@ const getUserProfile = (req, res) => {
 };
 
 /**
- * Router handler for POST request on `/users` API endpoint to create a specific user profile.
+ * Route handler for POST request on `/users` API endpoint to create a specific user profile.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
  * @return {object} `200` - success response - application/json.
@@ -67,6 +67,7 @@ const getUserProfile = (req, res) => {
  */
 const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
+
   User.create({ name, about, avatar })
     .then((user) => res
       .status(200)
@@ -84,8 +85,55 @@ const createUser = (req, res) => {
     });
 };
 
+/**
+ * Route handler for PATCH request on `/users/me` API endpoint to update the current user profile.
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid User data passed for updating the user profile.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+const updateUserProfile = (req, res) => {
+  const currentUser = req.user._id;
+  const { name, about } = req.body;
+
+  User.findByIdAndUpdate(
+    currentUser,
+    { name, about },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .orFail()
+    .then((user) => res
+      .status(200)
+      .send({ data: user }))
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        res
+          .status(404)
+          .send({ message: `${err.name} - User not found` });
+      } else if (err.name === 'ValidationError') {
+        res
+          .status(400)
+          .send({ message: getErrorMsg(err) });
+      } else if (err.name === 'CastError') {
+        res
+          .status(400)
+          .send({ message: `${err.name} - Invalid User ID passed for updation` });
+      } else {
+        res
+          .status(500)
+          .send({ message: `${err.name} - An error has occurred on the server` });
+      }
+    });
+};
+
 module.exports = {
   getUsers,
   getUserProfile,
   createUser,
+  updateUserProfile,
 };
