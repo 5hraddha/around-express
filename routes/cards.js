@@ -7,6 +7,7 @@ const {
   getCards,
   createCard,
   deleteCard,
+  likeCard,
 } = require('../controllers/cards');
 
 /**
@@ -41,5 +42,17 @@ router.post('/', createCard);
  * @return {object} `500` - Internal server error response.
  */
 router.delete('/:cardId', deleteCard);
+
+/**
+ * PUT /cards/:cardId/likes
+ * @summary - Update a card by liking it.
+ * @param {string} route - Route to serve.
+ * @param {Function} routeHandler - A callback to handle the route.
+ * @return {object} `200` - success response - application/json.
+ * @return {object} `400` - Invalid Card ID passed for liking a card.
+ * @return {object} `404` - The server can not find the requested resource.
+ * @return {object} `500` - Internal server error response.
+ */
+router.put('/:cardId/likes', likeCard);
 
 module.exports = router;
