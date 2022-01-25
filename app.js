@@ -2,6 +2,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
+const rateLimiter = require('./middlewares/rateLimiter');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 require('dotenv').config();
@@ -9,13 +10,12 @@ require('dotenv').config();
 const { DB_CONNECTION_URL, PORT = 3000 } = process.env;
 const app = express();
 
-// Secure the HTTP header
-app.use(helmet());
-
 // Connect to the MongoDB server
 mongoose.connect(DB_CONNECTION_URL);
 
+app.use(helmet());
 app.use(express.json());
+app.use(rateLimiter);
 
 // Implement a Temporary Authorization Solution
 app.use((req, res, next) => {
@@ -25,6 +25,7 @@ app.use((req, res, next) => {
 
   next();
 });
+
 // Add all routes
 app.use('/users', userRouter);
 app.use('/cards', cardRouter);
