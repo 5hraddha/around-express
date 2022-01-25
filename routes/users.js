@@ -38,7 +38,7 @@ router.get('/:userId', getUserProfile);
  * @summary - Create a specific user profile.
  * @param {String} route - Route to serve.
  * @param {Function} routeHandler - A callback to handle the route.
- * @return {Object} `200` - success response - application/json.
+ * @return {Object} `201` - success created response - application/json.
  * @return {Object} `400` - Invalid User ID passed for creating a user.
  * @return {Object} `500` - Internal server error response.
  */

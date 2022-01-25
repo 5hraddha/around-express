@@ -26,7 +26,7 @@ router.get('/', getCards);
  * @summary - Create a new card.
  * @param {String} route - Route to serve.
  * @param {Function} routeHandler - A callback to handle the route.
- * @return {Object} `200` - success response - application/json.
+ * @return {Object} `201` - success created response - application/json.
  * @return {Object} `400` - Invalid Card data passed for creating a card.
  * @return {Object} `500` - Internal server error response.
  */

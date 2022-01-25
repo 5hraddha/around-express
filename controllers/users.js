@@ -4,6 +4,13 @@
  */
 const User = require('../models/user');
 const getErrorMsg = require('../utils/getErrorMsg');
+const {
+  HTTP_SUCCESS_OK,
+  HTTP_SUCCESS_CREATED,
+  HTTP_CLIENT_ERROR_BAD_REQUEST,
+  HTTP_CLIENT_ERROR_NOT_FOUND,
+  HTTP_INTERNAL_SERVER_ERROR,
+} = require('../utils/constants');
 
 /**
  * Route handler for GET request on `/users` API endpoint to get all the users.
@@ -17,16 +24,16 @@ const getUsers = (req, res) => {
   User.find({})
     .orFail()
     .then((users) => res
-      .status(200)
+      .status(HTTP_SUCCESS_OK)
       .send(users))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res
-          .status(404)
+          .status(HTTP_CLIENT_ERROR_NOT_FOUND)
           .send({ message: `${err.name} - Users not found` });
       } else {
         res
-          .status(500)
+          .status(HTTP_INTERNAL_SERVER_ERROR)
           .send({ message: `${err.name} - An error has occurred on the server` });
       }
     });
@@ -47,20 +54,20 @@ const getUserProfile = (req, res) => {
   User.findById(userId)
     .orFail()
     .then((user) => res
-      .status(200)
+      .status(HTTP_SUCCESS_OK)
       .send({ data: user }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res
-          .status(404)
+          .status(HTTP_CLIENT_ERROR_NOT_FOUND)
           .send({ message: `${err.name} - User ID not found` });
       } else if (err.name === 'CastError') {
         res
-          .status(400)
+          .status(HTTP_CLIENT_ERROR_BAD_REQUEST)
           .send({ message: `${err.name} - Invalid User ID passed for searching a user` });
       } else {
         res
-          .status(500)
+          .status(HTTP_INTERNAL_SERVER_ERROR)
           .send({ message: `${err.name} - An error has occurred on the server` });
       }
     });
@@ -70,7 +77,7 @@ const getUserProfile = (req, res) => {
  * Route handler for POST request on `/users` API endpoint to create a specific user profile.
  * @param {Object} req - The request object
  * @param {Object} res - The response object.
- * @return {Object} `200` - success response - application/json.
+ * @return {Object} `201` - success created response - application/json.
  * @return {Object} `400` - Invalid User data passed for creating a user.
  * @return {Object} `500` - Internal server error response.
  */
@@ -79,16 +86,16 @@ const createUser = (req, res) => {
 
   User.create({ name, about, avatar })
     .then((user) => res
-      .status(200)
+      .status(HTTP_SUCCESS_CREATED)
       .send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res
-          .status(400)
+          .status(HTTP_CLIENT_ERROR_BAD_REQUEST)
           .send({ message: getErrorMsg(err) });
       } else {
         res
-          .status(500)
+          .status(HTTP_INTERNAL_SERVER_ERROR)
           .send({ message: `${err.name} - An error has occurred on the server` });
       }
     });
@@ -117,24 +124,24 @@ const updateUserProfile = (req, res) => {
   )
     .orFail()
     .then((user) => res
-      .status(200)
+      .status(HTTP_SUCCESS_OK)
       .send({ data: user }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res
-          .status(404)
+          .status(HTTP_CLIENT_ERROR_NOT_FOUND)
           .send({ message: `${err.name} - User not found` });
       } else if (err.name === 'ValidationError') {
         res
-          .status(400)
+          .status(HTTP_CLIENT_ERROR_BAD_REQUEST)
           .send({ message: getErrorMsg(err) });
       } else if (err.name === 'CastError') {
         res
-          .status(400)
+          .status(HTTP_CLIENT_ERROR_BAD_REQUEST)
           .send({ message: `${err.name} - Invalid User ID passed for updation` });
       } else {
         res
-          .status(500)
+          .status(HTTP_INTERNAL_SERVER_ERROR)
           .send({ message: `${err.name} - An error has occurred on the server` });
       }
     });
@@ -163,24 +170,24 @@ const updateUserAvatar = (req, res) => {
   )
     .orFail()
     .then((user) => res
-      .status(200)
+      .status(HTTP_SUCCESS_OK)
       .send({ data: user }))
     .catch((err) => {
       if (err.name === 'DocumentNotFoundError') {
         res
-          .status(404)
+          .status(HTTP_CLIENT_ERROR_NOT_FOUND)
           .send({ message: `${err.name} - User not found` });
       } else if (err.name === 'ValidationError') {
         res
-          .status(400)
+          .status(HTTP_CLIENT_ERROR_BAD_REQUEST)
           .send({ message: getErrorMsg(err) });
       } else if (err.name === 'CastError') {
         res
-          .status(400)
+          .status(HTTP_CLIENT_ERROR_BAD_REQUEST)
           .send({ message: `${err.name} - Invalid avatar link passed for updation` });
       } else {
         res
-          .status(500)
+          .status(HTTP_INTERNAL_SERVER_ERROR)
           .send({ message: `${err.name} - An error has occurred on the server` });
       }
     });
