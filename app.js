@@ -4,16 +4,16 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
+require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
-
+const { DB_CONNECTION_URL, PORT = 3000 } = process.env;
 const app = express();
 
 // Secure the HTTP header
 app.use(helmet());
 
 // Connect to the MongoDB server
-mongoose.connect('mongodb://127.0.0.1:27017/aroundb');
+mongoose.connect(DB_CONNECTION_URL);
 
 app.use(express.json());
 
