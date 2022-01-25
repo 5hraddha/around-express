@@ -3,9 +3,7 @@
  * @module models/user
  */
 const mongoose = require('mongoose');
-
-// eslint-disable-next-line
-const validateUrlRegex = /^(https?:\/\/)[w{3}]*\.?[a-z0-9\._\-~:\/\?%#\[\]@!$&'\(\)\*\+\,;=]+#?$/gmi;
+const validator = require('validator');
 
 /**
  * User schema. Contains all the users related fields: name, about and avatar
@@ -30,7 +28,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: [true, 'A link to the user avatar is required'],
     validate: {
-      validator: (url) => validateUrlRegex.test(url),
+      validator: validator.isURL,
       message: 'The entered link to the avatar is badly formed or contains invalid characters',
     },
   },

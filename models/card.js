@@ -3,9 +3,7 @@
  * @module models/card
  */
 const mongoose = require('mongoose');
-
-// eslint-disable-next-line
-const validateUrlRegex = /^(https?:\/\/)[w{3}]*\.?[a-z0-9\._\-~:\/\?%#\[\]@!$&'\(\)\*\+\,;=]+#?$/gmi;
+const validator = require('validator');
 
 /**
  * Card schema. Contains all the cards related fields: name, link, owner, likes and createdAt
@@ -23,7 +21,7 @@ const cardSchema = mongoose.Schema({
     type: String,
     required: [true, 'A link to the card picture is required'],
     validate: {
-      validator: (url) => validateUrlRegex.test(url),
+      validator: validator.isURL,
       message: 'The entered link to the picture is badly formed or contains invalid characters',
     },
   },

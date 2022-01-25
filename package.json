@@ -27,6 +27,7 @@
   "dependencies": {
     "express": "^4.17.2",
     "helmet": "^5.0.1",
-    "mongoose": "^6.1.7"
+    "mongoose": "^6.1.7",
+    "validator": "^13.7.0"
   }
 }
